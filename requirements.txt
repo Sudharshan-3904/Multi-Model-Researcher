@@ -7,3 +7,7 @@ PyPDF2
 python-docx
 langchain-community
 ollama
+redis
+fastapi
+feedparser
+motor
