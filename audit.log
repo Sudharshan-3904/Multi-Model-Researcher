@@ -1,0 +1,4 @@
+{'timestamp': '2025-08-08T10:02:02.074772', 'actor': 'Sujit S', 'action': 'request', 'details': {'query': "Describe about MIxture of Experts from recently released OpenAI's open-source model GPT-OSS", 'model': 'Ollama'}}
+{'timestamp': '2025-08-08T10:02:02.092506', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 2}}
+{'timestamp': '2025-08-08T10:02:02.104516', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {'summary': 'Top Papers:\nQuantum Finance Paper 1 (Citations: 120)\nQuantum Finance Paper 2 (Citations: 95)\n\nModel '}}
+{'timestamp': '2025-08-08T10:02:02.146450', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': "Describe about MIxture of Experts from recently released OpenAI's open-source model GPT-OSS"}}
