@@ -1,0 +1,6 @@
+Top Papers:
+Quantum Finance Paper 1 (Citations: 120)
+Quantum Finance Paper 2 (Citations: 95)
+
+Model Analysis:
+Model not supported.

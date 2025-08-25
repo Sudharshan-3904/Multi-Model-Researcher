@@ -19,9 +19,10 @@ app.add_middleware(
 )
 
 print("[mcp_server.py] Querying all providers and models at startup")
-ALL_MODELS = query_all_models()
+ALL_MODELS = dict()
 
-def get_provider_and_models():
+def get_provider_and_models():# -> dict[str, Any]:
+    ALL_MODELS = query_all_models()
     print("[mcp_server.py] get_provider_and_models called")
     return {
         "model_providers": list(ALL_MODELS.keys()),
