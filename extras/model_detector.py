@@ -20,12 +20,12 @@ class ModelDetector:
         ollama_models = []
         lmstudio_models = []
 
-        # Check Ollama
         try:
             response = requests.get(f"{self.ollama_url}/tags")
             if response.status_code == 200:
                 ollama_available = True
                 models_data = response.json()
+                print(models_data)
                 ollama_models = [model['name'] for model in models_data.get('models', [])]
                 logger.info(f"Found Ollama models: {ollama_models}")
         except requests.exceptions.RequestException as e:
@@ -51,11 +51,10 @@ class ModelDetector:
 
         # Preferred models in order of preference
         preferred_models = {
-            "ollama": ["mistral", "llama2", "codellama", "phi"],
+            "ollama": ["llama3.2"],
             "lmstudio": [
-                "TheBloke/Mistral-7B-Instruct-v0.2-GGUF",
-                "TheBloke/Llama-2-7B-Chat-GGUF",
-                "TheBloke/Phi-2-GGUF"
+                "openai/gpt-oss-20b",
+                "google/gemma-3-12b",
             ]
         }
 
@@ -66,3 +65,19 @@ class ModelDetector:
 
         # If no preferred model is available, return the first available model
         return available_models[0] 
+    
+
+if __name__ == '__main__':
+    detector = ModelDetector()
+    ollama_available, lmstudio_available, ollama_models, lmstudio_models = detector.detect_available_models()
+
+    print(f"Ollama Available: {ollama_available}, Models: {ollama_models}")
+    print(f"LM Studio Available: {lmstudio_available}, Models: {lmstudio_models}")
+
+    if ollama_available:
+        default_ollama_model = detector.get_default_model("ollama", ollama_models)
+        print(f"Default Ollama Model: {default_ollama_model}")
+
+    if lmstudio_available:
+        default_lmstudio_model = detector.get_default_model("lmstudio", lmstudio_models)
+        print(f"Default LM Studio Model: {default_lmstudio_model}")
