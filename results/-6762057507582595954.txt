@@ -1,0 +1,10 @@
+- Prediction of highly cited papers (Citations: 129)
+[Exception] Extra data: line 2 column 1 (char 103)
+
+- Disruptive papers in science are losing impact (Citations: 150)
+[Exception] Extra data: line 2 column 1 (char 103)
+
+- Astronomy's Greatest Hits: The 100 most Cited Papers in Each Year of the
+  First Decade of the 21st Century (2000 - 2009) (Citations: 190)
+[Exception] Extra data: line 2 column 1 (char 100)
+

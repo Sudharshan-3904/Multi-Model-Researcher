@@ -1,3 +1,12 @@
+from email import message
+from typing import TypedDict
+from langchain.chat_models import init_chat_model
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, ToolMessage
+
+from langgraph.prebuilt import ToolNdoe
+from langgraph import StateGraph, START, END
+
 from agents.data_agent import DataAgent
 from agents.analyzer_agent import AnalyzerAgent
 from storage.storage import Storage
@@ -14,17 +23,23 @@ class SupervisorAgent:
         self.audit = AuditLogger()
         self.model_interface = ModelInterface()
 
-    def handle_request(self, query, user, model_provider="Ollama", model=None):
+    async def handle_request(self, query, user, model_provider="Ollama", model=None):
         print(f"[supervisor.py] handle_request called with query={query}, user={user}, model_provider={model_provider}, model={model}")
         self.audit.log_action(user, 'request', {'query': query, 'model': model_provider})
         # Step 1: Collect data
         raw_data = self.data_agent.collect(query)
         self.audit.log_action('DataAgent', 'collected', {'items': len(raw_data)})
-        # Step 2: Analyze data (pass model interface)
-        report = self.analyzer_agent.analyze(raw_data, query, self.model_interface, model_provider)
-        self.audit.log_action('AnalyzerAgent', 'analyzed', {'summary': report[:100]})
+        # Step 2: Analyze data (pass model interface, model name, and provider)
+        report = await self.analyzer_agent.analyze(raw_data, query, self.model_interface, model_name=model, model_provider=model_provider)
+        self.audit.log_action('AnalyzerAgent', 'analyzed')
         # Step 3: Store results
         self.storage.save_report(query, report)
         self.audit.log_action('Supervisor', 'completed', {'query': query})
         print(f"[supervisor.py] handle_request returning report (first 100 chars): {report[:100]}")
         return report
+
+class ChatState(TypedDict):
+    message: list
+    query: str
+
+llm = init_chat_model(model=)

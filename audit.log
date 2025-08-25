@@ -10,3 +10,73 @@
 {'timestamp': '2025-08-25T05:07:07.740355', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 2}}
 {'timestamp': '2025-08-25T05:07:07.750358', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {'summary': 'Top Papers:\nQuantum Finance Paper 1 (Citations: 120)\nQuantum Finance Paper 2 (Citations: 95)\n\nModel '}}
 {'timestamp': '2025-08-25T05:07:07.765356', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Find the most cited papers on quantum physics in the last 5 years'}}
+{'timestamp': '2025-08-25T07:33:09.597189', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Quantum Physics', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:33:10.516811', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:33:10.522807', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {'summary': 'Top Papers:\nQuantum spherical model (Citations: 161)\nNonlinear Dynamics In Quantum Physics -- Quantu'}}
+{'timestamp': '2025-08-25T07:33:10.533806', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Quantum Physics'}}
+{'timestamp': '2025-08-25T07:39:16.188178', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Quantum Physics', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:39:16.414615', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:39:19.915990', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:39:19.923989', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Quantum Physics'}}
+{'timestamp': '2025-08-25T07:42:17.837770', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Quantum Physics', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:42:18.346918', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:42:35.590901', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:42:35.602904', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Quantum Physics'}}
+{'timestamp': '2025-08-25T07:48:08.764275', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:48:09.360330', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:48:22.178174', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:48:22.185815', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T07:48:59.592690', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:49:33.601291', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 0}}
+{'timestamp': '2025-08-25T07:49:33.685297', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:49:33.692303', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T07:50:41.221377', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:50:41.859379', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:51:28.243701', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:51:28.251214', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T07:52:51.350455', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:52:51.588662', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:53:19.073740', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:53:19.257658', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:54:36.817779', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'llama-3.2-3b-instruct'}}
+{'timestamp': '2025-08-25T07:54:37.016798', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:54:38.063919', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:54:38.071918', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T07:56:19.389795', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'openai/gpt-oss-20b'}}
+{'timestamp': '2025-08-25T07:56:19.585839', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:56:20.511731', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:56:20.529731', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T07:58:58.069156', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'openai/gpt-oss-20b'}}
+{'timestamp': '2025-08-25T07:58:58.306185', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T07:58:59.446767', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T07:58:59.454768', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T08:01:45.010417', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:01:46.258320', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:04:15.945982', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:04:15.955987', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T08:05:16.327266', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:05:16.529283', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:05:17.606013', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:05:17.617014', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T08:07:12.708357', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'World War 1', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:07:13.267940', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:07:15.593966', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:07:15.601967', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'World War 1'}}
+{'timestamp': '2025-08-25T08:10:24.145946', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'World War 1', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:10:25.553915', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:10:25.559915', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:10:52.665833', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'World War 1', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:10:52.822033', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:10:52.827033', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:14:33.550396', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:14:33.786429', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:16:38.181366', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:16:38.191365', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T08:17:27.476153', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'IBM', 'model': 'LM STUDIO'}}
+{'timestamp': '2025-08-25T08:17:27.933350', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 5}}
+{'timestamp': '2025-08-25T08:18:52.445146', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T08:18:52.454149', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'IBM'}}
+{'timestamp': '2025-08-25T12:52:16.321458', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Find the most cited papers on quantum physics in the last 5 years', 'model': 'OLLAMA'}}
+{'timestamp': '2025-08-25T12:52:17.451227', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 3}}
+{'timestamp': '2025-08-25T12:52:51.192687', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T12:52:51.201563', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Find the most cited papers on quantum physics in the last 5 years'}}

@@ -10,6 +10,7 @@ st.set_page_config(page_title="Multi-Agent Researcher", layout="wide")
 
 print("[app.py] Showing sidebar navigation")
 page = st.sidebar.selectbox("Navigation", ["Dashboard", "Add Provider"])
+st.sidebar.button("Refresh Models/Providers", on_click=lambda: onload())
 
 
 # Use session_state for providers and models
@@ -105,19 +106,28 @@ if page == "Dashboard":
 
             if st.button("Run Research"):
                 print(f"[app.py] Run Research clicked with provider={provider}, model={model}, user={user}, query={query}")
+                print(f"[app.py] Sending research request with: query={query}, user={user}, model_provider={provider}, model={model}")
                 with st.spinner("Agents are working via MCP server..."):
                     try:
+                        payload = {
+                            "query": query,
+                            "user": user or 'anonymous',
+                            "model_provider": provider,
+                            "model": model
+                        }
+                        print(f"[app.py] Payload: {payload}")
                         resp = requests.post(
                             "http://localhost:8000/research",
-                            json={"query": query, "user": user or 'anonymous', "model_provider": provider, "model_provider": model}
+                            json=payload
                         )
+                        print(f"[app.py] Response status: {resp.status_code}")
                         report = resp.json().get("report", "No report returned.")
                         print(f"[app.py] Research response: {report}")
                     except Exception as e:
                         report = f"Error: {e}"
                         print(f"[app.py] Error in research: {e}")
                 st.success("Research complete!")
-                st.text_area("Result Report", report, height=200)
+                st.text_area("Result Report", report, height=500)
                 st.info("All actions are logged for audit and compliance.")
 
 elif page == "Add Provider":

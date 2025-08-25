@@ -1,0 +1,18 @@
+- IBM Quantum Computers: Evolution, Performance, and Future Directions (Citations: 159)
+[Ollama Error] Status: 404
+
+- The IBM Quantum Computer and the IBM Quantum Experience (Citations: 173)
+[Ollama Error] Status: 404
+
+- Complete characterization of the directly implementable quantum gates
+  used in the IBM quantum processors (Citations: 180)
+[Error retrieving or summarizing article: HTTPSConnectionPool(host='arxiv.org', port=443): Read timed out.]
+
+- Superposition States on Different Axes of the Bloch Sphere for
+  Cost-Effective Circuits Realization on IBM Quantum Computers (Citations: 191)
+[Ollama Error] Status: 404
+
+- An Efficient Methodology for Mapping Quantum Circuits to the IBM QX
+  Architectures (Citations: 165)
+[Ollama Error] Status: 404
+

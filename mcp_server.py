@@ -29,6 +29,7 @@ def get_provider_and_models():# -> dict[str, Any]:
         "models": ALL_MODELS
     }
 
+
 @app.post("/research")
 async def research(request: Request):
     print("[mcp_server.py] /research endpoint called")
@@ -36,9 +37,9 @@ async def research(request: Request):
     print(f"[mcp_server.py] /research received data: {data}")
     query = data.get("query")
     user = data.get("user", "anonymous")
-    model_provider = data.get("model_provider", "Ollama")
+    model_provider = data.get("model_provider", "LM Studio")
     model = data.get("model", "")
-    report = supervisor.handle_request(query, user, model_provider=model_provider, model=model)
+    report = await supervisor.handle_request(query, user, model_provider=model_provider, model=model)
     print(f"[mcp_server.py] /research returning report: {report[:100]}")
     return {"report": report}
 

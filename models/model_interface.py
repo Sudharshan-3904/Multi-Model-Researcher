@@ -1,3 +1,4 @@
+from urllib import response
 import requests
 import json
 from typing import Dict, List, Tuple
@@ -101,12 +102,40 @@ class ModelInterface:
         else:
             return []
 
-    def run_model(self, model_name, prompt):
-        print(f"[ModelInterface] run_model called for model: {model_name}")
-        # Demo: mock response
-        if model_name == "Ollama":
-            return f"[Ollama] Response to: {prompt}"
-        elif model_name == "LM Studio":
-            return f"[LM Studio] Response to: {prompt}"
-        else:
-            return "Model not supported."
+
+    async def run_model(self, model_name, prompt, model_provider="LM_Studio"):
+        print(f"[ModelInterface] run_model called for provider: {model_provider}, model: {model_name}")
+        response_text = ""
+        try:
+            if model_provider.lower() == "ollama":
+                url = f"http://localhost:11434/api/generate"
+                payload = {"model": model_name, "prompt": prompt}
+                resp = requests.post(url, json=payload, timeout=30)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    with open('.\\logs\\debug_response_ollama.json', 'w') as f:
+                        json.dump(data, f, indent=2)
+                    response_text = data.get("response", "")
+                else:
+                    response_text = f"[Ollama Error] Status: {resp.status_code}"
+            elif model_provider.lower() == "lm studio" or model_provider.lower() == "lmstudio" or model_provider.lower() == "lm_studio":
+                url = f"http://localhost:1234/v1/completions"
+                payload = {"model": model_name, "prompt": prompt, "max_tokens": 20000}
+                resp = requests.post(url, json=payload, timeout=30)
+                with open('.\\logs\\debug_response_lm_studio.json', 'w') as f:
+                    json.dump(data, f, indent=2)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    # OpenAI compatible: choices[0].text
+                    response_text = data.get("choices", [{}])[0].get("text", "")
+                else:
+                    response_text = f"[LM Studio Error] Status: {resp.status_code}"
+            else:
+                response_text = f"[Error] Unknown provider: {model_provider}"
+        except Exception as e:
+            response_text = f"[Exception] {e}"
+        return response_text
+
+    def summarize(self, prompt, model_name="", model_provider="Ollama"):
+        print(f"[ModelInterface] summarize called with provider: {model_provider}, model: {model_name}")
+        return self.run_model(model_name=model_name, prompt=prompt, model_provider=model_provider)
