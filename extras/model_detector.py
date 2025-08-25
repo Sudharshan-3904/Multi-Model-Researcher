@@ -9,7 +9,6 @@ class ModelDetector:
     def __init__(self):
         self.ollama_url = "http://localhost:11434/api"
         self.lmstudio_url = "http://localhost:1234/v1"
-        print("[ModelDetector] Initialized with Ollama and LM Studio URLs")
 
     def detect_available_models(self) -> Tuple[bool, bool, List[str], List[str]]:
         """
@@ -29,10 +28,8 @@ class ModelDetector:
                 models_data = response.json()
                 ollama_models = [model['name'] for model in models_data.get('models', [])]
                 logger.info(f"Found Ollama models: {ollama_models}")
-                print(f"[ModelDetector] Found Ollama models: {ollama_models}")
         except requests.exceptions.RequestException as e:
             logger.warning(f"Ollama not available: {str(e)}")
-            print(f"[ModelDetector] Ollama not available: {str(e)}")
 
         # Check LM Studio
         try:
@@ -42,10 +39,8 @@ class ModelDetector:
                 models_data = response.json()
                 lmstudio_models = [model['id'] for model in models_data.get('data', [])]
                 logger.info(f"Found LM Studio models: {lmstudio_models}")
-                print(f"[ModelDetector] Found LM Studio models: {lmstudio_models}")
         except requests.exceptions.RequestException as e:
             logger.warning(f"LM Studio not available: {str(e)}")
-            print(f"[ModelDetector] LM Studio not available: {str(e)}")
 
         return ollama_available, lmstudio_available, ollama_models, lmstudio_models
 
@@ -70,43 +65,4 @@ class ModelDetector:
                 return model
 
         # If no preferred model is available, return the first available model
-        return available_models[0]
-
-class ModelInterface:
-    def __init__(self):
-        print("[ModelInterface] Initialized")
-        self.model_providers = ["Ollama", "LM Studio"]
-        self.detector = ModelDetector()
-
-    def get_ollama_models(self):
-        print("[ModelInterface] get_ollama_models called")
-        ollama_available, _, ollama_models, _ = self.detector.detect_available_models()
-        if ollama_available:
-            return ollama_models
-        return []
-
-    def get_lmStudio_models(self):
-        print("[ModelInterface] get_lmStudio_models called")
-        _, lmstudio_available, _, lmstudio_models = self.detector.detect_available_models()
-        if lmstudio_available:
-            return lmstudio_models
-        return []
-
-    def list_models(self, provider: str = "Ollama") -> list:
-        print(f"[ModelInterface] list_models called for provider: {provider}")
-        if provider == 'Ollama':
-            return self.get_ollama_models()
-        elif provider == 'LM Studio':
-            return self.get_lmStudio_models()
-        else:
-            return []
-
-    def run_model(self, model_name, prompt):
-        print(f"[ModelInterface] run_model called for model: {model_name}")
-        # Demo: mock response
-        if model_name == "Ollama":
-            return f"[Ollama] Response to: {prompt}"
-        elif model_name == "LM Studio":
-            return f"[LM Studio] Response to: {prompt}"
-        else:
-            return "Model not supported."
+        return available_models[0] 
