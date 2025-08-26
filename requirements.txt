@@ -4,3 +4,6 @@ fastapi
 ollama
 dotenv
 uvicorn
+beautifulsoup4
+langchain
+langgraph

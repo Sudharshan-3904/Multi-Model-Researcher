@@ -1,0 +1,10 @@
+- Nonlinear Dynamics In Quantum Physics -- Quantum Chaos and Quantum
+  Instantons (Citations: 178)
+[Exception] Extra data: line 2 column 1 (char 103)
+
+- Lecture Notes on Quantum Algorithms in Open Quantum Systems (Citations: 129)
+[Exception] Extra data: line 2 column 1 (char 103)
+
+- Quantum spherical model (Citations: 173)
+[Exception] Extra data: line 2 column 1 (char 112)
+

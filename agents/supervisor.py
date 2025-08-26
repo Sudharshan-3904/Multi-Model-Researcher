@@ -1,45 +1,63 @@
 from email import message
 from typing import TypedDict
-from langchain.chat_models import init_chat_model
-from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, ToolMessage
 
-from langgraph.prebuilt import ToolNdoe
-from langgraph import StateGraph, START, END
-
-from agents.data_agent import DataAgent
-from agents.analyzer_agent import AnalyzerAgent
+from agents.data_collector import DataAgent
+from agents.summarizer import Summarizer
+from agents.analyzer import Analyzer
+from agents.formatter import Formatter
+from agents.report_maker import ReportMaker
 from storage.storage import Storage
 from storage.audit import AuditLogger
-
 from models.model_interface import ModelInterface
 
 class SupervisorAgent:
     def __init__(self):
         print("[supervisor.py] SupervisorAgent initialized")
         self.data_agent = DataAgent()
-        self.analyzer_agent = AnalyzerAgent()
         self.storage = Storage()
         self.audit = AuditLogger()
         self.model_interface = ModelInterface()
+        self.analyzer = Analyzer()
+        self.formatter = Formatter()
+        self.report_maker = ReportMaker()
 
-    async def handle_request(self, query, user, model_provider="Ollama", model=None):
-        print(f"[supervisor.py] handle_request called with query={query}, user={user}, model_provider={model_provider}, model={model}")
-        self.audit.log_action(user, 'request', {'query': query, 'model': model_provider})
-        # Step 1: Collect data
+    async def handle_request(self, query, user, model_provider="Ollama", model=None, chat_title="Untitled"):
+        print(f"[supervisor.py] handle_request called with query={query}, user={user}, model_provider={model_provider}, model={model}, chat_title={chat_title}")
+        self.audit.log_action(user, 'request', {'query': query, 'model': model_provider, 'chat_title': chat_title})
+        # Step 1: Data Collector
         raw_data = self.data_agent.collect(query)
         self.audit.log_action('DataAgent', 'collected', {'items': len(raw_data)})
-        # Step 2: Analyze data (pass model interface, model name, and provider)
-        report = await self.analyzer_agent.analyze(raw_data, query, self.model_interface, model_name=model, model_provider=model_provider)
-        self.audit.log_action('AnalyzerAgent', 'analyzed')
-        # Step 3: Store results
+
+        # Step 2: Summarizer
+        summarizer = Summarizer(self.model_interface, model, model_provider)
+        summaries = []
+        for item in raw_data:
+            title = item.get('title', 'No Title')
+            citations = item.get('citations', 0)
+            url = item.get('url', '')
+            import requests
+            from bs4 import BeautifulSoup
+            try:
+                response = requests.get(url, timeout=10)
+                if response.status_code == 200:
+                    html = response.text
+                    soup = BeautifulSoup(html, 'html.parser')
+                    text = soup.get_text(separator=' ', strip=True)
+                    summary = summarizer.summarize(text, query)
+                    summaries.append(f"- {title} (Citations: {citations})\n{summary}")
+                else:
+                    summaries.append(f"- {title} (Citations: {citations})\n[Failed to retrieve article]")
+            except Exception as e:
+                summaries.append(f"- {title} (Citations: {citations})\n[Error retrieving or summarizing article: {e}]")
+        # Step 3: Analyzer
+        analysis = self.analyzer.analyze("\n\n".join(summaries))
+        self.audit.log_action('Analyzer', 'analyzed')
+        # Step 4: Formatter
+        formatted = self.formatter.format(analysis, chat_title, query, model_provider, model)
+        # Step 5: Report Maker
+        report = self.report_maker.make_report(formatted)
+        # Store results
         self.storage.save_report(query, report)
         self.audit.log_action('Supervisor', 'completed', {'query': query})
         print(f"[supervisor.py] handle_request returning report (first 100 chars): {report[:100]}")
         return report
-
-class ChatState(TypedDict):
-    message: list
-    query: str
-
-llm = init_chat_model(model=)

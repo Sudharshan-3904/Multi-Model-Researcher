@@ -88,7 +88,7 @@ if page == "Dashboard":
     print("[app.py] Dashboard page selected")
     st.title("🧠 Multi-Agent Researcher Dashboard")
     user = st.text_input("Enter your name:")
-    query = st.text_area("Enter your research query:", "Find the most cited papers on quantum physics in the last 5 years")
+    query = st.text_area("Enter your research query:", "Quantum physics")
 
     # Use session_state for providers/models
     providers = st.session_state.ALL_PROVIDERS

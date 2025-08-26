@@ -80,3 +80,9 @@
 {'timestamp': '2025-08-25T12:52:17.451227', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 3}}
 {'timestamp': '2025-08-25T12:52:51.192687', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
 {'timestamp': '2025-08-25T12:52:51.201563', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Find the most cited papers on quantum physics in the last 5 years'}}
+{'timestamp': '2025-08-25T13:14:16.572519', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Quantum physics', 'model': 'OLLAMA'}}
+{'timestamp': '2025-08-25T13:14:17.193470', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 3}}
+{'timestamp': '2025-08-25T13:14:35.732548', 'actor': 'AnalyzerAgent', 'action': 'analyzed', 'details': {}}
+{'timestamp': '2025-08-25T13:14:35.741646', 'actor': 'Supervisor', 'action': 'completed', 'details': {'query': 'Quantum physics'}}
+{'timestamp': '2025-08-26T07:49:54.569542', 'actor': 'anonymous', 'action': 'request', 'details': {'query': 'Quantum physics', 'model': 'OLLAMA', 'chat_title': 'Untitled'}}
+{'timestamp': '2025-08-26T07:50:05.780495', 'actor': 'DataAgent', 'action': 'collected', 'details': {'items': 3}}
