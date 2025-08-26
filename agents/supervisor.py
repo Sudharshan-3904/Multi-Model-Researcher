@@ -31,7 +31,8 @@ class SupervisorAgent:
         # Step 2: Summarizer
         summarizer = Summarizer(self.model_interface, model, model_provider)
         summaries = []
-        for item in raw_data:
+        import asyncio
+        async def summarize_one(item):
             title = item.get('title', 'No Title')
             citations = item.get('citations', 0)
             url = item.get('url', '')
@@ -43,12 +44,14 @@ class SupervisorAgent:
                     html = response.text
                     soup = BeautifulSoup(html, 'html.parser')
                     text = soup.get_text(separator=' ', strip=True)
-                    summary = summarizer.summarize(text, query)
-                    summaries.append(f"- {title} (Citations: {citations})\n{summary}")
+                    summary = await summarizer.summarize(text, query)
+                    return f"- {title} (Citations: {citations})\n{summary}"
                 else:
-                    summaries.append(f"- {title} (Citations: {citations})\n[Failed to retrieve article]")
+                    return f"- {title} (Citations: {citations})\n[Failed to retrieve article]"
             except Exception as e:
-                summaries.append(f"- {title} (Citations: {citations})\n[Error retrieving or summarizing article: {e}]")
+                return f"- {title} (Citations: {citations})\n[Error retrieving or summarizing article: {e}]"
+
+        summaries = await asyncio.gather(*(summarize_one(item) for item in raw_data))
         # Step 3: Analyzer
         analysis = self.analyzer.analyze("\n\n".join(summaries))
         self.audit.log_action('Analyzer', 'analyzed')

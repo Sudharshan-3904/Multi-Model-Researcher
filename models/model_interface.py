@@ -112,22 +112,28 @@ class ModelInterface:
                 payload = {"model": model_name, "prompt": prompt}
                 resp = requests.post(url, json=payload, timeout=30)
                 if resp.status_code == 200:
-                    data = resp.json()
-                    with open('.\\logs\\debug_response_ollama.json', 'w') as f:
-                        json.dump(data, f, indent=2)
-                    response_text = data.get("response", "")
+                    try:
+                        data = resp.json()
+                        with open('.\\logs\\debug_response_ollama.json', 'w') as f:
+                            json.dump(data, f, indent=2)
+                        response_text = data.get("response", "")
+                    except Exception as e:
+                        response_text = f"[Ollama JSON Error] {e}"
                 else:
                     response_text = f"[Ollama Error] Status: {resp.status_code}"
             elif model_provider.lower() == "lm studio" or model_provider.lower() == "lmstudio" or model_provider.lower() == "lm_studio":
                 url = f"http://localhost:1234/v1/completions"
                 payload = {"model": model_name, "prompt": prompt, "max_tokens": 20000}
                 resp = requests.post(url, json=payload, timeout=30)
-                with open('.\\logs\\debug_response_lm_studio.json', 'w') as f:
-                    json.dump(data, f, indent=2)
                 if resp.status_code == 200:
-                    data = resp.json()
-                    # OpenAI compatible: choices[0].text
-                    response_text = data.get("choices", [{}])[0].get("text", "")
+                    try:
+                        data = resp.json()
+                        with open('.\\logs\\debug_response_lm_studio.json', 'w') as f:
+                            json.dump(data, f, indent=2)
+                        # OpenAI compatible: choices[0].text
+                        response_text = data.get("choices", [{}])[0].get("text", "")
+                    except Exception as e:
+                        response_text = f"[LM Studio JSON Error] {e}"
                 else:
                     response_text = f"[LM Studio Error] Status: {resp.status_code}"
             else:

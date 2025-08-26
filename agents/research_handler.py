@@ -27,7 +27,7 @@ def collect(query):
     print(f"[research_handler.py]>Collect >>> collect called with query={query}")
     data = []
     try:
-        url = f"http://export.arxiv.org/api/query?search_query=all:{query}&start=0&max_results={3}"
+        url = f"http://export.arxiv.org/api/query?search_query=all:{query}&start=0&max_results={3 if len(query)<=30 else 5}"
         resp = requests.get(url, timeout=30)
         if resp.status_code == 200:
             import xml.etree.ElementTree as ET
@@ -48,6 +48,7 @@ def collect(query):
     return data
 
 # Steps 2 - Summarizer
+import asyncio
 @tool
 def summarize_articles(articles: list[dict]):
     print(f"[research_handler.py]>Summarize >>> summarize_articles called with articles={articles}")
@@ -56,8 +57,8 @@ def summarize_articles(articles: list[dict]):
     model_name = "llama2"
     model_provider = "Ollama"
     summarizer = Summarizer(model_interface, model_name, model_provider)
-    summaries = []
-    for item in articles:
+
+    async def summarize_one(item):
         title = item.get('title', 'No Title')
         citations = item.get('citations', 0)
         url = item.get('url', '')
@@ -70,14 +71,16 @@ def summarize_articles(articles: list[dict]):
                 html = response.text
                 soup = BeautifulSoup(html, 'html.parser')
                 text = soup.get_text(separator=' ', strip=True)
-                # Prepend abstract to article text for summarization
                 full_text = f"Abstract: {abstract}\n\n{text}"
-                summary = summarizer.summarize(full_text, "General Summary")
-                summaries.append(f"- {title} (Citations: {citations})\n{summary}")
+                summary = await summarizer.summarize(full_text, "General Summary")
+                return f"- {title} (Citations: {citations})\n{summary}"
             else:
-                summaries.append(f"- {title} (Citations: {citations})\n[Failed to retrieve article]")
+                return f"- {title} (Citations: {citations})\n[Failed to retrieve article]"
         except Exception as e:
-            summaries.append(f"- {title} (Citations: {citations})\n[Error retrieving or summarizing article: {e}]")
+            return f"- {title} (Citations: {citations})\n[Error retrieving or summarizing article: {e}]"
+
+    loop = asyncio.get_event_loop()
+    summaries = loop.run_until_complete(asyncio.gather(*(summarize_one(item) for item in articles)))
     return summaries
 
 

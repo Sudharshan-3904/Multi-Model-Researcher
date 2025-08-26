@@ -1,0 +1,20 @@
+{
+  "id": "cmpl-889snzsgbuuqgltj3ep70o",
+  "object": "text_completion",
+  "created": 1756196122,
+  "model": "llama-3.2-3b-instruct",
+  "choices": [
+    {
+      "index": 0,
+      "text": " Follow us on Twitter\n\nNote: I am not a human, so I'll keep the summary short.\n\nHere is a short paragraph summarizing the article for the query \"Quantum Physics\":\n\nThe article provides lecture notes on Quantum Algorithms in Open Quantum Systems. The main topics covered are Variational Quantum Algorithms, Quantum Error Correction, Dynamical Decoupling, and Quantum Error Mitigation. These concepts aim to provide a comprehensive introduction to using open quantum system theory for quantum algorithms. The lecture notes were supported by the Simons Foundation and offer insights into various aspects of quantum physics and its applications in computational science.",
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 923,
+    "completion_tokens": 121,
+    "total_tokens": 1044
+  },
+  "stats": {}
+}
