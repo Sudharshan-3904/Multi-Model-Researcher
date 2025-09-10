@@ -12,7 +12,6 @@ print("[app.py] Showing sidebar navigation")
 page = st.sidebar.selectbox("Navigation", ["Dashboard", "Add Provider"])
 st.sidebar.button("Refresh Models/Providers", on_click=lambda: onload())
 
-
 # Use session_state for providers and models
 if 'ALL_PROVIDERS' not in st.session_state:
     st.session_state.ALL_PROVIDERS = []
