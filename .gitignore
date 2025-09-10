@@ -1,8 +1,6 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[codz]
-*$py.class
-
-# Environments
-.env
-venv/
+venv/**
+*.env
+*.log
+*/__pycache__/*
+results/*
+*.log
