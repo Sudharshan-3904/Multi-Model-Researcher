@@ -98,7 +98,7 @@ Multi-Model-Researcher/
 ---
 
 ## 🔒 Security & Audit
-
+ 
 - All agent actions are logged in `audit.log`
 - Reports are saved in `results/`
 - API keys managed via `.env` (see dashboard)
