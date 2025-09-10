@@ -119,12 +119,6 @@ Multi-Model-Researcher/
 
 ---
 
-## 📝 Contributing
-
-Pull requests and issues are welcome! See `Architecture.md` for design guidelines.
-
----
-
 ## 📄 License
 
 MIT License
