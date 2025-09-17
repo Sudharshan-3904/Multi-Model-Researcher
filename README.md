@@ -98,7 +98,7 @@ Multi-Model-Researcher/
 ---
 
 ## 🔒 Security & Audit
-
+ 
 - All agent actions are logged in `audit.log`
 - Reports are saved in `results/`
 - API keys managed via `.env` (see dashboard)
@@ -116,12 +116,6 @@ Multi-Model-Researcher/
 - Storage agent saves the report and logs actions
 
 3. User receives a well-structured, auditable document
-
----
-
-## 📝 Contributing
-
-Pull requests and issues are welcome! See `Architecture.md` for design guidelines.
 
 ---
 

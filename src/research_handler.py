@@ -165,7 +165,7 @@ class LMStudioLLM:
         else:
             return type('LLMResponse', (), {"content": f"[LM Studio Error] Status: {resp.status_code}"})()
 
-llm = LMStudioLLM(model="openai/gpt-oss-20b")
+llm = LMStudioLLM(model="llama-3.2-3b-instruct")
 
 tool_node = ToolNode([collect, summarize_articles, analyze_summaries, format_report, store_report])
 
@@ -233,7 +233,7 @@ def run_research(query: str, user: str, model_provider: str = "Ollama", model: O
         'query': query
     }
 
-    max_iterations = 10
+    max_iterations = 20
     state = initial_state
     for i in range(max_iterations):
         # Decide which node to run next

@@ -126,7 +126,8 @@ if page == "Dashboard":
                         report = f"Error: {e}"
                         print(f"[app.py] Error in research: {e}")
                 st.success("Research complete!")
-                st.text_area("Result Report", report, height=500)
+                # st.text_area("Result Report", report, height=500)
+                st.markdown(report)
                 st.info("All actions are logged for audit and compliance.")
 
 elif page == "Add Provider":
