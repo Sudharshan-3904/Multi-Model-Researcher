@@ -8,6 +8,7 @@ print("[server.py] Starting FastAPI app...")
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from research_handler import run_research
+import re
 
 app = FastAPI()
 
@@ -54,7 +55,11 @@ async def research(request: Request):
         if isinstance(report, str):
             # Remove agent meta-messages if present
             if report.strip().startswith("Agent response:"):
-                import re
+                # If agent output contains unsupported tool calls, fallback to a message
+                if "browser tool" in report or "websearch" in report:
+                    fallback = "[ERROR] The requested tool (browser/websearch) is not available. Please use only supported tools: collect, summarize_articles, analyze_summaries, format_report, store_report."
+                    print(f"[server.py] /research unsupported tool fallback: {fallback}")
+                    return {"report": fallback}
                 doc_match = re.search(r"(#+ .+|\n# .+|\n\*\*Topic:|\n---|\n[A-Za-z].+)" , report, re.DOTALL)
                 if doc_match:
                     filtered = report[doc_match.start():].strip()
