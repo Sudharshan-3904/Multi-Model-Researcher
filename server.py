@@ -1,13 +1,14 @@
+
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-from models.provider_utils import query_all_models
+from fastapi import Body
+from research_handler import summarize_articles, analyze_summaries, format_report, run_research
 
-print("[server.py] Starting FastAPI app...")
+
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from research_handler import run_research
 import re
 
 app = FastAPI()
@@ -19,6 +20,48 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Summarizer endpoint
+@app.post("/summarize")
+async def summarize_endpoint(request: Request):
+    data = await request.json()
+    articles = data.get("articles", [])
+    try:
+        # summarize_articles is a sync function that internally uses asyncio
+        summaries = summarize_articles(articles)
+        return {"summaries": summaries}
+    except Exception as e:
+        return {"error": str(e)}
+
+# Analyzer endpoint
+@app.post("/analyze")
+async def analyze_endpoint(request: Request):
+    data = await request.json()
+    summaries = data.get("summaries", [])
+    try:
+        report = analyze_summaries(summaries)
+        return {"report": report}
+    except Exception as e:
+        return {"error": str(e)}
+
+# Formatter endpoint
+@app.post("/format")
+async def format_endpoint(request: Request):
+    data = await request.json()
+    analysis = data.get("analysis", "")
+    chat_title = data.get("chat_title", "Untitled")
+    topic = data.get("topic", "")
+    provider = data.get("provider", "")
+    model = data.get("model", "")
+    try:
+        formatted = format_report(analysis, chat_title, topic, provider, model)
+        return {"formatted": formatted}
+    except Exception as e:
+        return {"error": str(e)}
+
+from models.provider_utils import query_all_models
+
+print("[server.py] Starting FastAPI app...")
 
 ALL_MODELS = dict()
 
