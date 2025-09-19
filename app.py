@@ -9,7 +9,8 @@ print("[app.py] Setting Streamlit page config")
 st.set_page_config(page_title="Multi-Agent Researcher", layout="wide")
 
 print("[app.py] Showing sidebar navigation")
-page = st.sidebar.selectbox("Navigation", ["Dashboard", "Add Provider"])
+
+tool_page = st.sidebar.radio("Tools", ["Dashboard", "Summarizer", "Analyzer", "Formatter", "Add Provider"])
 st.sidebar.button("Refresh Models/Providers", on_click=lambda: onload())
 
 # Use session_state for providers and models
@@ -83,7 +84,7 @@ def onload():
     st.session_state.ALL_PROVIDERS = providers
     st.session_state.ALL_MODELS = models
 
-if page == "Dashboard":
+if tool_page == "Dashboard":
     print("[app.py] Dashboard page selected")
     st.title("🧠 Multi-Agent Researcher Dashboard")
     user = st.text_input("Enter your name:")
@@ -130,7 +131,54 @@ if page == "Dashboard":
                 st.markdown(report)
                 st.info("All actions are logged for audit and compliance.")
 
-elif page == "Add Provider":
+elif tool_page == "Summarizer":
+    st.title("Summarizer Tool")
+    st.write("Summarize a list of articles (title, abstract, url, citations). Paste as JSON list.")
+    articles_json = st.text_area("Articles JSON", '[{"title": "Sample", "abstract": "...", "url": "...", "citations": 100}]', height=200)
+    if st.button("Summarize Articles"):
+        try:
+            articles = eval(articles_json)
+            resp = requests.post("http://localhost:8000/summarize", json={"articles": articles})
+            summaries = resp.json().get("summaries", [])
+            st.write("### Summaries:")
+            for s in summaries:
+                st.markdown(s)
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+elif tool_page == "Analyzer":
+    st.title("Analyzer Tool")
+    st.write("Analyze a list of summaries. Paste as JSON list of strings.")
+    summaries_json = st.text_area("Summaries JSON", '["Summary 1", "Summary 2"]', height=200)
+    if st.button("Analyze Summaries"):
+        try:
+            summaries = eval(summaries_json)
+            resp = requests.post("http://localhost:8000/analyze", json={"summaries": summaries})
+            report = resp.json().get("report", "")
+            st.write("### Analysis Report:")
+            st.markdown(report)
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+elif tool_page == "Formatter":
+    st.title("Formatter Tool")
+    st.write("Format an analysis into a markdown report.")
+    analysis = st.text_area("Analysis Text", "Paste analysis here", height=200)
+    chat_title = st.text_input("Chat Title", "Untitled")
+    topic = st.text_input("Topic", "Quantum Physics")
+    provider = st.text_input("Provider", "Ollama")
+    model = st.text_input("Model", "llama2")
+    if st.button("Format Report"):
+        try:
+            payload = {"analysis": analysis, "chat_title": chat_title, "topic": topic, "provider": provider, "model": model}
+            resp = requests.post("http://localhost:8000/format", json=payload)
+            formatted = resp.json().get("formatted", "")
+            st.write("### Formatted Markdown Report:")
+            st.markdown(formatted)
+        except Exception as e:
+            st.error(f"Error: {e}")
+
+elif tool_page == "Add Provider":
     print("[app.py] Add Provider page selected")
     st.title("Add New Model Provider")
     st.write("Register a new model provider and its API key. This will be stored in the local incex.")

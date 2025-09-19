@@ -110,32 +110,39 @@ class ModelInterface:
             if model_provider.lower() == "ollama":
                 url = f"http://localhost:11434/api/generate"
                 payload = {"model": model_name, "prompt": prompt}
-                resp = requests.post(url, json=payload, timeout=30)
-                if resp.status_code == 200:
-                    try:
+                try:
+                    resp = requests.post(url, json=payload, timeout=10)
+                    if resp.status_code == 200:
                         data = resp.json()
                         with open('.\\logs\\debug_response_ollama.json', 'w') as f:
                             json.dump(data, f, indent=2)
                         response_text = data.get("response", "")
-                    except Exception as e:
-                        response_text = f"[Ollama JSON Error] {e}"
-                else:
-                    response_text = f"[Ollama Error] Status: {resp.status_code}"
-            elif model_provider.lower() == "lm studio" or model_provider.lower() == "lmstudio" or model_provider.lower() == "lm_studio":
+                    else:
+                        response_text = f"[Ollama Error] Status: {resp.status_code} Response: {resp.text}"
+                except requests.exceptions.Timeout:
+                    response_text = "[Ollama Error] Request timed out. Is Ollama running and is the model loaded?"
+                except requests.exceptions.ConnectionError:
+                    response_text = "[Ollama Error] Could not connect to Ollama server. Is it running on port 11434?"
+                except Exception as e:
+                    response_text = f"[Ollama Exception] {e}"
+            elif model_provider.lower() in ["lm studio", "lmstudio", "lm_studio"]:
                 url = f"http://localhost:1234/v1/completions"
-                payload = {"model": model_name, "prompt": prompt, "max_tokens": 20000}
-                resp = requests.post(url, json=payload, timeout=30)
-                if resp.status_code == 200:
-                    try:
+                payload = {"model": model_name, "prompt": prompt, "max_tokens": 512}
+                try:
+                    resp = requests.post(url, json=payload, timeout=10)
+                    if resp.status_code == 200:
                         data = resp.json()
                         with open('.\\logs\\debug_response_lm_studio.json', 'w') as f:
                             json.dump(data, f, indent=2)
-                        # OpenAI compatible: choices[0].text
                         response_text = data.get("choices", [{}])[0].get("text", "")
-                    except Exception as e:
-                        response_text = f"[LM Studio JSON Error] {e}"
-                else:
-                    response_text = f"[LM Studio Error] Status: {resp.status_code}"
+                    else:
+                        response_text = f"[LM Studio Error] Status: {resp.status_code} Response: {resp.text}"
+                except requests.exceptions.Timeout:
+                    response_text = "[LM Studio Error] Request timed out. Is LM Studio running and is the model loaded?"
+                except requests.exceptions.ConnectionError:
+                    response_text = "[LM Studio Error] Could not connect to LM Studio server. Is it running on port 1234?"
+                except Exception as e:
+                    response_text = f"[LM Studio Exception] {e}"
             else:
                 response_text = f"[Error] Unknown provider: {model_provider}"
         except Exception as e:
